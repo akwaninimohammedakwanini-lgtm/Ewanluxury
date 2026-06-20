@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العداد التنازلي للمسابقة - ثيم الكنافة</title>
+    <style>
+        /* إعدادات الخطوط والخلفية الأساسية */
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght=400;500;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            /* رابط صورة الكنافة (يمكنك استبداله برابط صورتك الخاصة) */
+            background-image: url('bg.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* طبقة تعتيم (Overlay) فوق صورة الكنافة لضمان وضوح وقراءة العداد */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 1;
+        }
+
+        /* حاوية العداد الرئيسية بتصميم زجاجي داكن يتناسب مع الثيم الذهبي */
+        .countdown-container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px rgba(255, 170, 0, 0.2) solid;
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            max-width: 800px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            /* ألوان متدرجة تليق بالكنافة والقطر الدافئ */
+            background: linear-gradient(45deg, #ffaa00, #ff5500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 4px 20px rgba(255, 85, 0, 0.3);
+        }
+     h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+}
+        p.subtitle {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin-bottom: 3rem;
+        }
+
+        /* شبكة مربعات العداد */
+        .countdown-timer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .box {
+            background: rgba(255, 85, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border-bottom: 4px solid #ffaa00; /* حافة سفلية ذهبية */
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+        }
+
+        .number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .label {
+            font-size: 1rem;
+            color: #ffaa00;
+            font-weight: 500;
+        }
+
+        /* رسالة انتهاء الوقت المبهجة */
+        .ended-message {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ffaa00;
+            display: none;
+            animation: pulse 1.5s infinite;
+            text-shadow: 0 0 20px rgba(255, 170, 0, 0.5);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.9; }
+        }
+
+        /* التجاوب مع شاشات الهواتف الذكية */
+        @media (max-width: 600px) {
+            .countdown-timer {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            h1 { font-size: 2rem; }
+            .number { font-size: 2.5rem; }
+        }
+/* تنسيق الشعار وضمان توسيطه وتجاوبه */
+        .brand-logo {
+            max-width: 200px; /* التحكم في العرض الأقصى للشعار */
+            height: auto;     /* الحفاظ على أبعاد الصورة نسبة وتناسب */
+            margin-bottom: 0.0rem; /* مسافة بين الشعار والعنوان */
+            filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.3)); /* ظل خفيف خلف الشعار */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="countdown-container">
+        <div id="content-wrapper">
+		<img src="Logo14.png" alt="شعار المسابقة" class="brand-logo">
+            <h1>إيوان الفخامة للحلويات</h1>
+            <h2>Ewan Luxury Sweets</h2>
+            <p class="subtitle">الوقت المتبقي على إغلاق المسابقة </p>
+            
+            <div class="countdown-timer">
+                <div class="box">
+                    <span class="number" id="days">00</span>
+                    <span class="label">أيام</span>
+                </div>
+                <div class="box">
+                    <span class="number" id="hours">00</span>
+                    <span class="label">ساعات</span>
+                </div>
+                <div class="box">
+                    <span class="number" id="minutes">00</span>
+                    <span class="label">دقائق</span>
+                </div>
+                <div class="box">
+                    <span class="number" id="seconds">00</span>
+                    <span class="label">ثواني</span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="ended-message" class="ended-message">
+            🥮 بدأ السحب المباشر الآن! بالتوفيق للجميع 🥮
+        </div>
+    </div>
+
+    <script>
+        // --- إعدادات وقت انتهاء المسابقة ---
+        // صيغة الوقت: YYYY-MM-DDTHH:MM:SS (مثال: 25 يونيو 2026 الساعة 6 مساءً)
+        const targetDateString = "2026-06-21T00:00:00"; 
+        
+        const countdownDate = new Date(targetDateString).getTime();
+
+        // تحديث العداد دورياً كل ثانية (1000 مللي ثانية)
+        const timerInterval = setInterval(function() {
+            
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            // حساب الأيام والساعات والدقائق والثواني
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // إضافة صفر على اليسار إذا كانت الأرقام خانة واحدة (Padding)
+            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+            // كود التعامل مع حالة انتهاء الوقت المتبقي
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                document.getElementById("content-wrapper").style.display = "none";
+                document.getElementById("ended-message").style.display = "block";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
